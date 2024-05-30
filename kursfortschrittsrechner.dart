@@ -1,23 +1,31 @@
 import 'dart:io';
-
+int allDaysInTraining = 175;
+int uxUi = 25;
+int coding = 23;
+int flutterI = 46;
+int flutterII = 25;
+int flutterIII = 22;
+int amv = 20;
 void main() {
-  int allDaysInTraining = 270;
+  
 
   String? name = userInputName();
 
   greet(name);
-  num? daysInTraining = inputDays();
+  int? daysInTraining = inputDays();
 
-  if (daysInTraining != null && daysInTraining < allDaysInTraining) {
+  if (daysInTraining < allDaysInTraining) {
     print('Du hast $daysInTraining von $allDaysInTraining absolviert.');
 
-    num precent = daysInPercent(daysInTraining, allDaysInTraining);
+    double precent = daysInPercent(daysInTraining, allDaysInTraining);
     print('Fortschritt: ${precent.toStringAsFixed(2)}%.');
     print(progressBar(precent));
 
-    num remaining = remainingDays(daysInTraining, allDaysInTraining);
+    int remaining = remainingDays(daysInTraining, allDaysInTraining);
     print('Es bleiben noch $remaining Tage übrig');
 
+    
+    category(daysInTraining);
     milestones(precent);
   } else if (daysInTraining == allDaysInTraining) {
     print('Herzlichen Glückwunsch Sie haben den Kurs vollständig absolviert!');
@@ -43,7 +51,7 @@ String? userInputName() {
   }
 }
 
-num? inputDays() {
+int inputDays() {
   print('Bitte gib die Tage ein, die du schon im Kurs absolviert hast:');
   //fast das gleich wie // return int.tryParse(stdin.readLineSync() ?? '0');
   // hier wird die funktion erneut aufgerufen, bei ungültiger Eingabe
@@ -63,29 +71,51 @@ num? inputDays() {
   // return int.tryParse(stdin.readLineSync() ?? '0');
 }
 
-num daysInPercent(num daysInTraining, num allDaysInTraining) {
+double daysInPercent(int daysInTraining, int allDaysInTraining) {
   return (daysInTraining / allDaysInTraining) * 100;
 }
 
-num remainingDays(num daysInTraining, num allDaysInTraining) {
+int remainingDays(int daysInTraining, int allDaysInTraining) {
   return allDaysInTraining - daysInTraining;
 }
 
-void milestones(num percent) {
+void milestones(double percent) {
   if (percent == 100) {
     print('Du hast einen Meilenstein von 100% erreicht');
-  } else if (percent >= 75 && percent < 100) {
+  } else if (percent > 75) {
     print('Du hast einen Meilenstein von 75% erreicht');
-  } else if (percent >= 50 && percent < 75) {
+  } else if (percent > 50) {
     print('Du hast einen Meilenstein von 50% erreicht');
-  } else if (percent >= 25 && percent < 50) {
+  } else if (percent > 25) {
     print('Du hast einen Meilenstein von 25% erreicht');
   } else {
     print('Du hast noch keinen Meilenstein erreicht');
   }
 }
 
-String progressBarLong(num percent) {
+
+void category(int currentDays) {
+  if ( currentDays == allDaysInTraining) {
+    print('Herzlichen Glückwunsch! \nDu hast alle Module abgeschlossen');
+  } else if (currentDays > allDaysInTraining - amv) {
+    print('Du hast das Modul FlutterIII abgeschlossen.\nDu befindest dich aktuell im Modul AMV.');
+  } else if (currentDays > allDaysInTraining - amv - flutterIII) {
+    print('Du hast das Modul FlutterII abgeschlossen.\nDu befindest dich aktuell im Modul FlutterIII.');
+  } else if (currentDays > allDaysInTraining - amv - flutterIII - flutterII) {
+    print('Du hast das Modul FlutterI abgeschlossen.\nDu befindest dich aktuell im Modul FlutterII.');
+  } else if (currentDays > allDaysInTraining - amv - flutterIII -flutterII - flutterI) {
+    print('Du hast das Modul Coding abgeschlossen.\nDu befindest dich aktuell im Modul FlutterI.');
+  } else if (currentDays > allDaysInTraining - amv - flutterIII -flutterII - flutterI - coding) {
+    print('Du hast das Modul UX/UI abgeschlossen.\nDu befindest dich aktuell im Modul Coding.');
+  } else if (currentDays > allDaysInTraining - amv - flutterIII -flutterII - flutterI - coding - uxUi) {
+    print('Du hast das Modul ECO abgeschlossen.\nDu befindest dich aktuell im Modul UX/UI.');
+  } else {
+    print('Du hast noch kein Modul abgeschlossen.\nDu befindest dich aktuell im Modul ECO.');
+  }
+}
+
+
+String progressBarLong(double percent) {
   int progress = percent.round();
   
   if (progress == 100) {
@@ -193,7 +223,7 @@ String progressBarLong(num percent) {
   }
 }
 
-String progressBar(num percent) {
+String progressBar(double percent) {
   String progressSign = '=';
   String fillSign = '-';
   int totalSign = 50;
