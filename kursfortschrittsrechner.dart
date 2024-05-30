@@ -198,7 +198,7 @@ String progressBar(num percent) {
   String fillSign = '-';
   int totalSign = 50;
   int usedSign = ((percent / 100) * totalSign).round();
-  String progressBar = '[' '${progressSign * usedSign}' '${fillSign * (totalSign - usedSign)}' ']';
+  String progressBar = '[${progressSign * usedSign}${fillSign * (totalSign - usedSign)}]';
   return progressBar;
 }
 
